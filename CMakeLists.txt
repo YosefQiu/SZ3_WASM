@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.18)
 project(SZ3 VERSION 3.2.2)
 
+if(EMSCRIPTEN)
+    message(STATUS "Building with Emscripten")
+    set(CMAKE_C_COMPILER "emcc")
+    set(CMAKE_CXX_COMPILER "em++")
+endif()
+
 #data version defines the version of the compressed data format
 #it is not always equal to the program version (e.g., SZ3 v3.1.0 and SZ3 v.3.1.1 may use the same data version of v.3.1.0)
 #only update data version if the new version of the program changes compressed data format
@@ -77,6 +83,7 @@ endif ()
 #if (BUILD_SZ3_BINARY)
 add_subdirectory(tools/sz3)
 add_subdirectory(tools/sz3c)
+add_subdirectory(tools/wasmSZ3)
 #endif ()
 
 option(BUILD_H5Z_FILTER "build the H5Z-SZ3 filter" OFF)
